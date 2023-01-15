@@ -4,7 +4,7 @@ export function withDefer<T>(fn: (defer: ((args: any) => any)) => T): T {
     deferred.push(fn);
   }
   const result = fn(defer);
-  deferred.reverse().forEach((fn) => fn());
+  deferred.reverse().forEach((fn) => fn?.());
   return result;
 }
 
@@ -20,17 +20,3 @@ export async function withDeferAsync<T>(fn: (defer: ((args: any) => any)) => Pro
   }
   return result;
 }
-
-// withDefer((defer) => {
-//   const a = "1";
-//   const b = 2;
-//   function closeSomething(x, y) {
-//     console.log(x, y)
-//   }
-//   defer(function() {
-//     closeSomething(a, b);
-//   })
-//   doSomething();
-
-// })
-
