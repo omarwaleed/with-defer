@@ -1,4 +1,4 @@
-# Defer.js
+# WithDefer.js
 
 Defer.js is a wrapper for your functions that tried to implement a similar way to `defer` keyword in go.
 
@@ -7,13 +7,13 @@ Defer.js is a wrapper for your functions that tried to implement a similar way t
 with npm
 
 ```sh
-npm install defer_js
+npm install withdefer.js
 ```
 
 with yarn
 
 ```sh
-yarn add defer_js
+yarn add withdefer.js
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ Defer comes with 2 functions:
 ### With Defer
 
 ```js
-const { withDefer } = require('defer_js')
+const { withDefer } = require('withdefer.js')
 
 const result = withDefer((defer) => {
   defer(function() {console.log("this will print third")})
@@ -40,7 +40,7 @@ console.log("This will print at the end. Result:", result)
 ### With Defer Async
 
 ```js
-const { withDeferAsync } = require('defer_js')
+const { withDeferAsync } = require('withdefer.js')
 
 // inside an async function
 const result = await withDeferAsync(async (defer) => {
