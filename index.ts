@@ -16,7 +16,7 @@ export async function withDeferAsync<T>(fn: (defer: ((args: any) => any)) => Pro
   const result = await fn(defer);
   deferred.reverse();
   for (let i = 0; i < deferred.length; i++) {
-    await deferred[i]();
+    await deferred[i]?.();
   }
   return result;
 }
