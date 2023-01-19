@@ -1,11 +1,11 @@
-import { withDefer, withDeferAsync } from ".";
+import { defer, deferAsync } from '.';
 
-describe("withDefer", () => {
+describe("defer", () => {
   it("should defer execution of a sync function", () => {
     const fn = jest.fn();
     const deferred = jest.fn();
     const inputs: string[] = [];
-    const result = withDefer(function(defer) {
+    const result = defer(function(defer) {
       defer(deferred);
       defer(() => inputs.push("1"));
       defer(() => inputs.push("2"));
@@ -25,7 +25,7 @@ describe("withDefer", () => {
     function add(a: number, b: number) {
       sum += a + b;
     }
-    const result = withDefer(function(defer) {
+    const result = defer(function(defer) {
       defer(() => add(1, 2));
       return true;
     });
@@ -40,7 +40,7 @@ describe("withDefer", () => {
     const deferred = () => new Promise((resolve) => setTimeout(() => {
       console.log("running deferred promise"); deferredOut = 1; resolve(true)
     }, 100));
-    const result = await withDeferAsync(async function(defer) {
+    const result = await deferAsync(async function(defer) {
       defer(deferred);
       fn();
       await new Promise((resolve) => setTimeout(() => resolve(afn()), 100));
@@ -58,7 +58,7 @@ describe("withDefer", () => {
     const deferred = () => new Promise((resolve, reject) => setTimeout(() => {
       console.log("running deferred promise"); reject(new Error("test error"))
     }, 100));
-    await expect(withDeferAsync(async function(defer) {
+    await expect(deferAsync(async function(defer) {
       defer(deferred);
       await fn();
       await new Promise((resolve) => setTimeout(() => resolve(afn()), 100));
