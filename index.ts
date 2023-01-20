@@ -1,4 +1,4 @@
-export function defer<T>(fn: (defer: ((args: any) => any)) => T): T {
+export function withDefer<T>(fn: (defer: ((args: any) => any)) => T): T {
   const deferred: (() => unknown)[] = [];
   const defer = function (fn: (...args: any) => unknown) {
     deferred.push(fn);
@@ -8,7 +8,7 @@ export function defer<T>(fn: (defer: ((args: any) => any)) => T): T {
   return result;
 }
 
-export async function deferAsync<T>(fn: (defer: ((args: any) => any)) => Promise<T>): Promise<T> {
+export async function withDeferAsync<T>(fn: (defer: ((args: any) => any)) => Promise<T>): Promise<T> {
   const deferred: (() => Promise<unknown> | unknown)[] = [];
   const defer = function (fn: (...args: any) => void) {
     deferred.push(fn);

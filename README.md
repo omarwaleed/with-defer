@@ -1,6 +1,6 @@
-# @gopher.js/Defer
+# @gopher.js/defer
 
-Defer.js is a wrapper for your functions that tried to implement a similar way to `defer` keyword in go.
+Defer is a wrapper for your functions that tried to implement a similar way to `defer` keyword in go.
 
 ## Installation
 
@@ -18,17 +18,20 @@ yarn add @gopher.js/defer
 
 ## Usage
 
-Defer comes with 2 functions:
+Defer comes with 2 wrapper functions:
 
-- defer
-- deferAsync
+- withDefer
+- withDeferAsync
+
+Every time you call defer, the function passed is added to a stack. After the wrapper function completes,
+the wrapper starts popping the stack functions and calling them in the reverse order they were inserted.
 
 ### With Defer
 
 ```js
-const { defer } = require('@gopher.js/defer')
+const { withDefer } = require('@gopher.js/defer')
 
-const result = defer((defer) => {
+const result = withDefer((defer) => {
   defer(function() {console.log("this will print third")})
   defer(function() {console.log("this will print second")})
   console.log("I will print before all others")
@@ -40,10 +43,10 @@ console.log("This will print at the end. Result:", result)
 ### With Defer Async
 
 ```js
-const { deferAsync } = require('@gopher.js/defer')
+const { withDeferAsync } = require('@gopher.js/defer')
 
 // inside an async function
-const result = await deferAsync(async (defer) => {
+const result = await withDeferAsync(async (defer) => {
   defer(() => new Promise((resolve) => {
     console.log("this will print third")
     resolve();
